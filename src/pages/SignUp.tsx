@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import Input from "../components/common/Input.tsx";
+import Button from "../components/common/Button.tsx";
 
 type SignUpFormValues = {
     userId: string;
@@ -149,22 +150,7 @@ function SignUp() {
                         </div>
                     )}
 
-                    <button
-                        className={twMerge(
-                            ["h-10", "px-4", "py-2"],
-                            ["w-full"],
-                            ["flex", "justify-center", "items-center"],
-                            ["rounded-md", "text-sm", "font-medium"],
-                            ["transition"],
-                            [
-                                "bg-primary-main",
-                                "text-primary-contrastText",
-                                "hover:bg-primary-dark",
-                            ],
-                        )}
-                    >
-                        Create Account
-                    </button>
+                    <Button fullWidth={true} variant={"warning"}>Create Account</Button>
                 </form>
             </div>
         </div>
