@@ -17,7 +17,7 @@ function App() {
                 )}
             >
                 <NavBar />
-                <main className={twMerge(["flex-1", "mx-auto", "px-4"])}>
+                <main className={twMerge(["w-full","flex-1", "mx-auto", "px-4"])}>
                     <Routes>
                         <Route
                             path={"/"}

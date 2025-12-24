@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { FiPlus } from "react-icons/fi";
+import { FiCheck, FiPlus, FiTrash2 } from "react-icons/fi";
 import Button from "../components/common/Button.tsx";
 import { useTodoStore } from "../stores/useTodoStore.ts";
 
@@ -66,6 +66,83 @@ function TodoPage() {
                     </span>
                 </Button>
             </form>
+
+            <div className={"space-y-3"}>
+                {todos.length === 0 && (
+                    <p
+                        className={twMerge([
+                            "mt-10",
+                            "text-center",
+                            "text-text-disabled",
+                        ])}
+                    >
+                        할 일이 없습니다. 새로 추가해보세요!
+                    </p>
+                )}
+                {todos.map((item, index) => (
+                    <div
+                        key={index}
+                        className={twMerge(
+                            ["p-4", "bg-background-paper"],
+                            ["flex", "justify-between", "items-center"],
+                            [
+                                "border",
+                                "border-divider",
+                                "shadow-sm",
+                                "rounded-lg",
+                            ],
+                            item.completed && "opacity-60",
+                        )}
+                    >
+                        <div
+                            className={twMerge([
+                                "flex",
+                                "items-center",
+                                "gap-3",
+                                "overflow-hidden",
+                            ])}
+                        >
+                            <button
+                                onClick={() => toggleTodo(item.id)}
+                                className={twMerge(
+                                    ["w-6", "h-6"],
+                                    ["flex", "justify-center", "items-center"],
+                                    ["border-2", "rounded-full"],
+                                    item.completed
+                                        ? [
+                                              "bg-success-main",
+                                              "border-success-dark",
+                                              "text-success-contrastText",
+                                          ]
+                                        : [
+                                              "border-divider",
+                                              "hover:border-primary-main",
+                                          ],
+                                )}
+                            >
+                                {item.completed && <FiCheck size={14} />}
+                            </button>
+                            <span
+                                className={twMerge(
+                                    ["text-lg", "truncate", "flex-1"],
+                                    item.completed && ["line-through"],
+                                )}
+                            >
+                                {item.text}
+                            </span>
+                        </div>
+                        <button
+                            onClick={() => removeTodo(item.id)}
+                            className={twMerge(
+                                ["text-text-disabled", "hover:text-error-main"],
+                                ["transition-colors", "duration-500"],
+                            )}
+                        >
+                            <FiTrash2 size={18} />
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
