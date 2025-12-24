@@ -5,13 +5,14 @@ interface TodoType {
     id: string;
     text: string;
     completed: boolean;
+    userId: string;
 }
 
 interface TodoStore {
     todos: TodoType[];
     // ToDo 추가 기능
     // 실행하는 쪽에서 string을 받아서, todos에 객체를 저장하면 끝
-    addTodo: (text: string) => void;
+    addTodo: (text: string, userId: string) => void;
 
     // ToDo 컴플리트 시키는 기능 (토글기능)
     // 실행하는 쪽에서 id string을 받아서, todo의 내용을 업데이트
@@ -27,7 +28,7 @@ export const useTodoStore = create<TodoStore>()(
     persist(
         (set) => ({
             todos: [],
-            addTodo: (text) =>
+            addTodo: (text, userId) =>
                 set((state) => ({
                     todos: [
                         ...state.todos,
@@ -38,6 +39,7 @@ export const useTodoStore = create<TodoStore>()(
                             id: crypto.randomUUID(), // 고유값
                             text: text,
                             completed: false,
+                            userId: userId,
                         },
                     ],
                 })),
