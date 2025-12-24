@@ -134,7 +134,7 @@ function SignUp() {
                             },
                         })}
                         error={errors.password}
-                        type={"text"}
+                        type={"password"}
                         placeholder={"비밀번호를 입력해주세요. "}
                     />
 

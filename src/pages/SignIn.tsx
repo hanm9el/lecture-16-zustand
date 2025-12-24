@@ -23,7 +23,7 @@ function SignIn() {
 
     const onSubmit = (data: SignInFormValues) => {
         // 1. 로컬스토리지에서 사용자 목록을 조회
-        const existingUsersJson = localStorage.getItem("mock_users");
+        const existingUsersJson = localStorage.getItem("mok_users");
         const existingUsers: User[] = existingUsersJson
             ? JSON.parse(existingUsersJson)
             : [];
@@ -31,6 +31,9 @@ function SignIn() {
         // 2. 그 안에 존재하는 유저(사용자명도 같아야 되고 비밀번호도 같아야되는) 체크
         // array 안에 존재하는지 찾고자 할 때에는 find(찾는조건함수) 메서드 사용
         // find() 메서드는 반환될 때, 있으면 그 요소 자체가 반환되며, 없으면 undefined 반환
+
+        console.log(existingUsers);
+        console.log(data);
         const foundUser = existingUsers.find(
             (user) =>
                 user.email === data.email && user.password === data.password,
@@ -112,7 +115,7 @@ function SignIn() {
                             },
                         })}
                         error={errors.password}
-                        type={"text"}
+                        type={"password"}
                         placeholder={"비밀번호를 입력해주세요. "}
                     />
 
