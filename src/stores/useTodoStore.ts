@@ -27,42 +27,50 @@ export const useTodoStore = create<TodoStore>()(
     persist(
         (set) => ({
             todos: [],
-            addTodo: (text) => set(state =>({
-                todos: [...state.todos, {
-                    // uuid : 전 세계적으로 고유한 128비트 식별자. 수학적으로 증명됨
-                    // 예 : 123e4567-e89b-12d3-a456-426614174000
-                    // uuid를 만드는 메소드 : crypto.randomUUID()
-                    id: crypto.randomUUID(), // 고유값
-                    text: text,
-                    completed: false,
-                }],
-            })),
-            toggleTodo: (id:string) => set(state => ({
-                // todos = [
-                //                 { id: 1, text: "abc", completed: false },
-                //                 { id: 2, text: "eee", completed: true },
-                //                 { id: 3, text: "eab", completed: false },
-                //             ];
+            addTodo: (text) =>
+                set((state) => ({
+                    todos: [
+                        ...state.todos,
+                        {
+                            // uuid : 전 세계적으로 고유한 128비트 식별자. 수학적으로 증명됨
+                            // 예 : 123e4567-e89b-12d3-a456-426614174000
+                            // uuid를 만드는 메소드 : crypto.randomUUID()
+                            id: crypto.randomUUID(), // 고유값
+                            text: text,
+                            completed: false,
+                        },
+                    ],
+                })),
+            toggleTodo: (id: string) =>
+                set((state) => ({
+                    // todos = [
+                    //                 { id: 1, text: "abc", completed: false },
+                    //                 { id: 2, text: "eee", completed: true },
+                    //                 { id: 3, text: "eab", completed: false },
+                    //             ];
 
-                // map()  => 결과는 []
-                //
-                // 예시) toggleTodo(3);
-                //
-                // [
-                //    { id: 1, text: "abc", completed: false },
-                //    { id: 2, text: "eee", completed: true },
-                //    { id: 3, text: "eab", completed: true }
-                // ]
-                todos: state.todos.map((item)=>
-                item.id === id ? {...item, completed: !item.completed} :item
-                )
-            })),
-            removeTodo: (id:string) => set(state => ({
-                // filter() 메소드
-                // Array에서만 사용 가능하며, filter(조건함수) 형식으로 작성해야 하며,
-                // 조건함수에 해당되는 것들만 return됨
-                todos: state.todos.filter(todo => todo.id !== id)
-            })),
+                    // map()  => 결과는 []
+                    //
+                    // 예시) toggleTodo(3);
+                    //
+                    // [
+                    //    { id: 1, text: "abc", completed: false },
+                    //    { id: 2, text: "eee", completed: true },
+                    //    { id: 3, text: "eab", completed: true }
+                    // ]
+                    todos: state.todos.map((item) =>
+                        item.id === id
+                            ? { ...item, completed: !item.completed }
+                            : item,
+                    ),
+                })),
+            removeTodo: (id: string) =>
+                set((state) => ({
+                    // filter() 메소드
+                    // Array에서만 사용 가능하며, filter(조건함수) 형식으로 작성해야 하며,
+                    // 조건함수에 해당되는 것들만 return됨
+                    todos: state.todos.filter((todo) => todo.id !== id),
+                })),
         }),
         { name: "todo-storage" },
     ),
