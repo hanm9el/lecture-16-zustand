@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface TodoType {
+export interface TodoType {
     id: string;
     text: string;
     completed: boolean;
@@ -17,6 +17,8 @@ interface TodoStore {
     // ToDo 컴플리트 시키는 기능 (토글기능)
     // 실행하는 쪽에서 id string을 받아서, todo의 내용을 업데이트
     toggleTodo: (text: string) => void;
+
+    updateTodo: (id: string, text: string) => void;
 
     // ToDo 삭제 기능
     // 실행하는 쪽에서 id string을 받아서, todo를 삭제
@@ -64,6 +66,12 @@ export const useTodoStore = create<TodoStore>()(
                         item.id === id
                             ? { ...item, completed: !item.completed }
                             : item,
+                    ),
+                })),
+            updateTodo: (id: string, text: string) =>
+                set((state) => ({
+                    todos: state.todos.map((item) =>
+                        item.id === id ? { ...item, text: text } : item,
                     ),
                 })),
             removeTodo: (id: string) =>
